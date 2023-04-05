@@ -12,7 +12,7 @@ export default async (req: Request) => {
     'https://dev.oioki.me/origin/',
   )
 
-  const nonce = crypto.randomBytes(16).toString("hex");
+  const nonce = crypto.randomUUID();
 
   let csp = r.headers.get('content-security-policy') || '';
   csp = csp.replaceAll('MAGIC_NONCE', nonce);
