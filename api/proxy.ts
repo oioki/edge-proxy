@@ -6,10 +6,11 @@ export default async (req: Request) => {
   console.log('url', req.url);
   console.log('query', req.query);
   console.log('headers', req.headers);
+  console.log('env', process.env);
 
   // Fetch from the backend.
   const r = await fetch(
-    'https://dev.oioki.me/origin/',
+    process.env.UPSTREAM + '/',
   )
 
   const nonce = crypto.randomUUID();
