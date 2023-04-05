@@ -3,15 +3,13 @@ export const config = {
 }
 
 export default async (req: Request) => {
-  // Fetch from the backend, but copy the user's authorization cookie into
-  // the authorization header.
+  console.log('url', req.url);
+  console.log('query', req.query);
+  console.log('headers', req.headers);
+
+  // Fetch from the backend.
   const r = await fetch(
-    'https://res.cloudinary.com/zeit-inc/image/fetch/https://raw.githubusercontent.com/vercel/vercel/main/packages/frameworks/logos/next.svg',
-    {
-      headers: {
-        authorization: getCookies(req).get('authorization') || '',
-      },
-    }
+    'https://dev.oioki.me/origin/',
   )
   return new Response(r.body, {
     status: r.status,
