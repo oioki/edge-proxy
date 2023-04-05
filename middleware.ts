@@ -13,6 +13,8 @@ async function getAlbum() {
 export default function middleware(request: Request, context: RequestContext) {
   context.waitUntil(getAlbum().then((json) => console.log({ json })));
  
-  return new Response.json({ hello: 'world' });
+  return new Response('{"hello": "world"}', {
+    status: 200
+  });
 }
 
