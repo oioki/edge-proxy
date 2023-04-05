@@ -17,10 +17,10 @@ export default async (req: Request) => {
   let csp = r.headers.get('content-security-policy') || '';
   csp = csp.replace(/MAGIC_NONCE/g, nonce);
 
-  let body = await r.body.text();
+  let body = await r.text();
   body = body.replace(/MAGIC_NONCE/g, nonce);
 
-  return new Response(r.body, {
+  return new Response(body, {
     status: r.status,
     headers: {
       // Allow list of backend headers.
