@@ -13,10 +13,18 @@ export default async (req: Request) => {
   const nonce = crypto.randomUUID();
 
   let csp = r.headers.get('content-security-policy') || '';
-  csp = csp.replace(/MAGIC_NONCE/g, nonce);
+  if (!csp.includes('MAGICNONCE')) {
+    // TODO: we should inject static nonce on the build phase
+    csp = csp.replace(/script-src /, "script-src 'nonce-MAGICNONCE' ");
+  }
+  csp = csp.replace(/MAGICNONCE/g, nonce);
 
   let body = await r.text();
-  body = body.replace(/MAGIC_NONCE/g, nonce);
+  if (!body.includes('MAGICNONCE')) {
+    // TODO: we should inject static nonce on the build phase
+    body = body.replace(/<script/g, "<script nonce=\"MAGICNONCE\"");
+  }
+  body = body.replace(/MAGICNONCE/g, nonce);
 
   return new Response(body, {
     status: r.status,
