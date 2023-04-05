@@ -11,10 +11,21 @@ export default async (req: Request) => {
   const r = await fetch(
     'https://dev.oioki.me/origin/',
   )
+
+  crypto = require('crypto');
+
+  const nonce = crypto.randomBytes(16).toString("hex");
+
+  csp = r.headers.get('content-security-policy') || '';
+  csp = csp.replaceAll('MAGIC_NONCE', nonce);
+
+  body = r.body.replaceAll('MAGIC_NONCE', nonce);
+
   return new Response(r.body, {
     status: r.status,
     headers: {
       // Allow list of backend headers.
+      'content-security-policy': csp,
       'content-type': r.headers.get('content-type') || '',
     },
   })
