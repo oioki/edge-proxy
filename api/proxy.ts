@@ -3,12 +3,11 @@ export const config = {
 }
 
 export default async (req: Request) => {
-  console.log('url.pathname', req.url.pathname);
-  console.log('env', process.env);
+  let pathname = new URL(req.url).pathname;
 
   // Fetch from the backend.
   const r = await fetch(
-    process.env.UPSTREAM + '/',
+    process.env.UPSTREAM + pathname,
   )
 
   const nonce = crypto.randomUUID();
