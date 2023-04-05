@@ -15,9 +15,9 @@ export default async (req: Request) => {
   const nonce = crypto.randomUUID();
 
   let csp = r.headers.get('content-security-policy') || '';
-  csp = csp.replaceAll('MAGIC_NONCE', nonce);
+  csp = csp.replace(/MAGIC_NONCE/g, nonce);
 
-  let body = r.body.replaceAll('MAGIC_NONCE', nonce);
+  let body = r.body.replace(/MAGIC_NONCE/g, nonce);
 
   return new Response(r.body, {
     status: r.status,
