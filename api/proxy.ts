@@ -11,9 +11,8 @@ export default async (req: Request) => {
   )
 
   const nonce = crypto.randomUUID();
-  const CSP_HEADER = 'content-security-policy-report-only';
 
-  let csp = r.headers.get(CSP_HEADER) || '';
+  let csp = r.headers.get('content-security-policy-report-only') || '';
   if (!csp.includes('MAGICNONCE')) {
     // TODO: we should inject static nonce on the build phase
     csp = csp.replace(/script-src /, "script-src 'nonce-MAGICNONCE' ");
@@ -31,7 +30,7 @@ export default async (req: Request) => {
     status: r.status,
     headers: {
       // Allow list of backend headers.
-      CSP_HEADER: csp,
+      'content-security-policy-report-only': csp,
       'content-type': r.headers.get('content-type') || '',
     },
   })
