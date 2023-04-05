@@ -1,8 +1,5 @@
 import type { RequestContext } from '@vercel/edge';
 
-// https://vercel.com/docs/concepts/functions/edge-middleware/middleware-api#waituntil
- 
-const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
  
 export async function middleware(request: Request, context: RequestContext) {
   console.log('url', request.url);
