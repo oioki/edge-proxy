@@ -4,7 +4,7 @@ import type { RequestContext } from '@vercel/edge';
  
 const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
  
-export default function middleware(request: Request, context: RequestContext) {
+export async function middleware(request: Request, context: RequestContext) {
   console.log('url', request.url);
   console.log('query', request.query);
 
