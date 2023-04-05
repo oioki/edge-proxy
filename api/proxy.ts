@@ -17,7 +17,8 @@ export default async (req: Request) => {
   let csp = r.headers.get('content-security-policy') || '';
   csp = csp.replace(/MAGIC_NONCE/g, nonce);
 
-  let body = r.body.replace(/MAGIC_NONCE/g, nonce);
+  let body = await r.body.text();
+  body = body.replace(/MAGIC_NONCE/g, nonce);
 
   return new Response(r.body, {
     status: r.status,
