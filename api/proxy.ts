@@ -3,9 +3,7 @@ export const config = {
 }
 
 export default async (req: Request) => {
-  console.log('url', req.url);
-  console.log('query', req.query);
-  console.log('headers', req.headers);
+  console.log('url.pathname', req.url.pathname);
   console.log('env', process.env);
 
   // Fetch from the backend.
