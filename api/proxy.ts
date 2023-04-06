@@ -13,18 +13,9 @@ export default async (req: Request) => {
   const nonce = crypto.randomUUID();
 
   let csp = r.headers.get('content-security-policy-report-only') || '';
-  if (!csp.includes('MAGICNONCE')) {
-    // TODO: we should inject static nonce on the build phase
-    csp = csp.replace(/script-src /, "script-src 'strict-dynamic' 'nonce-MAGICNONCE' ");
-  }
   csp = csp.replace(/MAGICNONCE/g, nonce);
-  csp = csp.replace(/ 'unsafe-inline'/g, "");
 
   let body = await r.text();
-  if (!body.includes('MAGICNONCE')) {
-    // TODO: we should inject static nonce on the build phase
-    body = body.replace(/<script/g, "<script nonce=\"MAGICNONCE\"");
-  }
   body = body.replace(/MAGICNONCE/g, nonce);
 
   return new Response(body, {
