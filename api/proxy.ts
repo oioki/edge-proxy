@@ -13,10 +13,10 @@ export default async (req: Request) => {
   const nonce = crypto.randomUUID();
 
   let csp = r.headers.get('content-security-policy-report-only') || '';
-  csp = csp.replace(/MAGICNONCE/g, nonce);
+  csp = csp.replace(/STATICNONCE/g, nonce);
 
   let body = await r.text();
-  body = body.replace(/MAGICNONCE/g, nonce);
+  body = body.replace(/STATICNONCE/g, nonce);
 
   return new Response(body, {
     status: r.status,
